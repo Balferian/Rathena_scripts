@@ -1,0 +1,19 @@
+//===== rAthena Script =======================================
+//= Donate converter
+//===== By: ==================================================
+//= Balfear
+//===== Last Updated: ========================================
+//= 20171207
+//===== Description: ========================================= 
+//= Automatic convert player balance("cp_credits") to cashpoint in game when player login.
+//============================================================
+-	script	balance2cashpoint	-1,{
+OnPCLoginEvent:
+	query_sql("select balance from `cp_credits` WHERE account_id = " + getcharid(3) + "", .@balance);
+	if (.@balance != 0) {
+		query_sql ("UPDATE `cp_credits` SET balance = 0 WHERE account_id = " + getcharid(3) + "");
+		set #CASHPOINTS,(#CASHPOINTS + .@balance);
+		announce "Gain cash point: "+.@balance+"",bc_self, 0xADFFC5, FW_BOLD;
+	}
+	end;
+}
