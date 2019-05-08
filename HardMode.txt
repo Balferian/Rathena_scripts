@@ -1,0 +1,36 @@
+prontera,153,190,6	script	Hard Mode	123,{
+	if (Hard_Mode == 1) {
+		mes "[Hard mode game]";
+		mes "^FF0000Hard mode is active. You can`t disable it.^000000";
+		close;
+	}
+	mes "[Hard mode game]";
+	mes "Do you realy want to activate hard mode?";
+	mes "^FF0000If you activate hard mode then it will not be possible to disable it.^000000";
+	mes "^FF0000If you die your character will be delete.^000000";
+	switch(select("Cancel:Activate")) {
+		Case 1:
+			mes "Good luck.";
+			close;
+		Case 2:
+			mes "^0000FFHard mode activated!^000000";
+			Hard_Mode = 1;
+			close;
+	}
+
+OnPCDieEvent:
+	if (Hard_Mode == 1) {
+		set .@deadplayer,getcharid(0);
+		message strcharinfo(0),"Game Over";
+		atcommand "@kick "+strcharinfo(0);
+		set .@j, getarraysize( .char_delete$ );
+		for (.@i = 0; .@i < .@j; .@i++) {
+			query_sql("DELETE FROM `"+ .char_delete$[.@i] +"` WHERE `char_id` = '"+ .@deadplayer +"'");
+		}
+		query_sql "DELETE FROM `party` WHERE `leader_char` = '"+.@deadplayer+"'";
+	}
+	end;
+OnInit:
+	setarray .char_delete$[0],"bonus_script","char","cart_inventory","elemental","friends","global_reg_value","guild","guild_member","homunculus","hotkey","inventory","memo","mercenary","mercenary_owner","pet","quest","sc_data","skill","skillcooldown";
+	end;
+}
