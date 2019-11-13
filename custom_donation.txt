@@ -9,7 +9,7 @@ if($@count != 0) {
 	set $@nb,query_sql("SELECT id, account_id,donate,status FROM test_donation WHERE status='0'",$@id,$@account_id,$@donate,$@status);
 	for (.@i = 0; .@i < $@nb; .@i++) {
 		if (isloggedin($@account_id[.@i])) { // check if player online
-			atcommand "#cash "+rid2name($@account_id[.@i])+" "+$@donate[.@i];
+			atcommand "#cash \""+rid2name($@account_id[.@i])+"\" "+$@donate[.@i];
 			query_sql("UPDATE test_donation SET status='1' WHERE id='"+$@id[.@i]+"' AND account_id='"+$@account_id[.@i]+"'");
 		}
 	}
