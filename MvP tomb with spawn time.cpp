@@ -1,4 +1,4 @@
-// change it in mob.cpp
+// change it in npc.cpp
 // MvP tomb [GreenBox]
 void run_tomb(struct map_session_data* sd, struct npc_data* nd)
 {
