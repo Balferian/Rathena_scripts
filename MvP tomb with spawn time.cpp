@@ -28,6 +28,7 @@ void run_tomb(struct map_session_data* sd, struct npc_data* nd)
     seconds = seconds - (60 * 60 * hours);
     minutes = seconds / 60;
 
+    //snprintf(buffer, sizeof(buffer), "Spawn in ^EE0000%d hours %d minutes %d seconds^000000", hours, minutes, seconds);
     snprintf(buffer, sizeof(buffer), "Spawn in ^EE0000%d hours %d minutes^000000", hours, minutes);
     clif_scriptmes(sd, nd->bl.id, buffer);
 
