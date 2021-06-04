@@ -52,8 +52,15 @@ prontera,155,180,3	script	MVP Event	403,{
     OnMyMobDead:
 		mapannounce .event_map$, "[MVP event]: "+strcharinfo(0)+" kill ["+getmonsterinfo(.MVP[.wave ], MOB_NAME)+"]!", 0;
         .wave++;
-		if((.wave)%10 == 0)
-			getitem .Prizes[.wave], .Prizes[.wave + 1], killerrid;
+		if(.Prizes$[.wave] != "0") {
+			explode(.@Prizes$, .Prizes$[.wave], ",");
+			for(.@i = 0; .@i < getarraysize(.@Prizes$); .@i++) {
+				explode(.@item$, .@Prizes$[.@i], ":");
+				for(.@x = 0; .@x < getarraysize(.@item$); .@x += 2) {
+					getitem atoi(.@item$[.@x]), atoi(.@item$[.@x+1]), killerrid;
+				}
+			}
+		}
 		sleep2 10000;
         if(.wave >= getarraysize(.MVP)){
             mapannounce .event_map$, "Event ends.", 0;
@@ -124,10 +131,10 @@ prontera,155,180,3	script	MVP Event	403,{
 			1011;	// wave 50
 			
 		// 	Rewards			 ID,Amount
-		setarray .Prizes[10],501,1;	// wave 10
-		setarray .Prizes[20],502,2;	// wave 20
-		setarray .Prizes[30],503,3;	// wave 30
-		setarray .Prizes[40],504,4;	// wave 40
-		setarray .Prizes[50],505,5;	// wave 50
+		setarray .Prizes$[10],"501:5";	// wave 10
+		setarray .Prizes$[20],"502:7";	// wave 20
+		setarray .Prizes$[30],"503:10";	// wave 30
+		setarray .Prizes$[40],"504:15";	// wave 40
+		setarray .Prizes$[50],"505:20,506:50";	// wave 50
         end;
 }
