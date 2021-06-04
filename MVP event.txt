@@ -131,6 +131,7 @@ prontera,155,180,3	script	MVP Event	403,{
 			1011;	// wave 50
 			
 		// 	Rewards			 ID,Amount
+		// Example			 "501:5,502:10,505:50"
 		setarray .Prizes$[10],"501:5";	// wave 10
 		setarray .Prizes$[20],"502:7";	// wave 20
 		setarray .Prizes$[30],"503:10";	// wave 30
