@@ -1,0 +1,133 @@
+prontera,155,180,3	script	MVP Event	403,{
+	mes "This is the entrance to ^FF0000MVP Event^000000.";
+    if(.status) mes "Do you want enter to event?";
+	else mes "Event inactive now.";
+    next;
+    switch(select("Info",.status ? "Enter" : "",(getgmlevel() == 99) ? "Start event" : "")) {
+    case 1:
+		mes "It will open at these times:";
+		mes "12:00 , 18:00 , 21:00";
+		close;
+    case 2:
+		// Check if player already registred in event
+		.@char_id = getcharid(0);
+		if(inarray(.player_list[0], .@char_id) == -1) {
+			setarray .player_list[getarraysize(.player_list)], .@char_id;
+		} else {
+			mes "You can`t enter again.";
+			close;
+		}
+		// Warp player to event map
+		warp .event_map$, 50, 50;
+        end;
+    case 3:
+		killmonsterall .event_map$;
+		deletearray .player_list[0],getarraysize(.player_list);
+		.status = 1;
+		.wave = 0;
+		donpcevent strnpcinfo(0)+"::OnEventStart";
+        end;
+    }
+		
+	OnClock1200:
+	OnClock1800:
+	OnClock2100:
+		killmonsterall .event_map$;
+		deletearray .player_list[0],getarraysize(.player_list);
+		.status = 1;
+		.wave = 0;
+        announce "MVP Event starting in 5 mins.", 0;
+		end;
+		
+	// Waiting 5 min and start event
+	OnEventStart:
+	OnClock1205:
+	OnClock1805:
+	OnClock2105:
+		announce "MVP Event starts!", 0;
+        mapannounce .event_map$, "Wave "+(.wave + 1)+": ["+getmonsterinfo(.MVP[.wave ], MOB_NAME)+"]", 0;
+        monster .event_map$,0,0,"--ja--",.MVP[.wave ],1,strnpcinfo(0)+"::OnMyMobDead";
+        end;
+		
+    OnMyMobDead:
+		mapannounce .event_map$, "[MVP event]: "+strcharinfo(0)+" kill ["+getmonsterinfo(.MVP[.wave ], MOB_NAME)+"]!", 0;
+        .wave++;
+		if((.wave)%10 == 0)
+			getitem .Prizes[.wave], .Prizes[.wave + 1], killerrid;
+		sleep2 10000;
+        if(.wave >= getarraysize(.MVP)){
+            mapannounce .event_map$, "Event ends.", 0;
+			.status = 0;
+			sleep2 10000;
+			// Warp all players from event map
+			mapwarp .event_map$,"alberta",150,150,1,63;
+           end;
+        }
+        mapannounce .event_map$, "Wave "+(.wave + 1)+": ["+getmonsterinfo(.MVP[.wave ], MOB_NAME)+"]", 0;
+        monster .event_map$,0,0,"--ja--",.MVP[.wave ],1,strnpcinfo(0)+"::OnMyMobDead";
+        end;
+		
+    OnInit:
+		.status = 0;
+		.event_map$ = "guild_vs1";
+		setarray .player_list[0], 0;
+        setarray .MVP[0],
+			1002,	// wave 1
+			1002,	// wave 2
+			1002,	// wave 3
+			1002,	// wave 4
+			1002,	// wave 5
+			1002,	// wave 6
+			1002,	// wave 7
+			1002,	// wave 8
+			1002,	// wave 9
+			1011,	// wave 10
+			1002,	// wave 11
+			1002,	// wave 12
+			1002,	// wave 13
+			1002,	// wave 14
+			1002,	// wave 15
+			1002,	// wave 16
+			1002,	// wave 17
+			1002,	// wave 18
+			1002,	// wave 19
+			1011,	// wave 20
+			1002,	// wave 21
+			1002,	// wave 22
+			1002,	// wave 23
+			1002,	// wave 24
+			1002,	// wave 25
+			1002,	// wave 26
+			1002,	// wave 27
+			1002,	// wave 28
+			1002,	// wave 29
+			1011,	// wave 30
+			1002,	// wave 31
+			1002,	// wave 32
+			1002,	// wave 33
+			1002,	// wave 34
+			1002,	// wave 35
+			1002,	// wave 36
+			1002,	// wave 37
+			1002,	// wave 38
+			1002,	// wave 39
+			1011,	// wave 40
+			1002,	// wave 41
+			1002,	// wave 42
+			1002,	// wave 43
+			1002,	// wave 44
+			1002,	// wave 45
+			1002,	// wave 46
+			1002,	// wave 47
+			1002,	// wave 48
+			1002,	// wave 49
+			1011;	// wave 50
+			
+		// 	Rewards			 ID,Amount
+		setarray .Prizes[10],501,1;	// wave 10
+		setarray .Prizes[20],502,2;	// wave 20
+		setarray .Prizes[30],503,3;	// wave 30
+		setarray .Prizes[40],504,4;	// wave 40
+		setarray .Prizes[50],505,5;	// wave 50
+        end;
+}
