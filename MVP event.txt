@@ -1,6 +1,6 @@
 prontera,155,180,3	script	MVP Event	403,{
 	mes "This is the entrance to ^FF0000MVP Event^000000.";
-    if(.status) mes "Do you want enter to event?";
+	if(.status) mes "Do you want enter to event?";
 	else mes "Event inactive now.";
     next;
     switch(select("Info",.status ? "Enter" : "",(getgmlevel() == 99) ? "Start event" : "")) {
