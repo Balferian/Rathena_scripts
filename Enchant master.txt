@@ -2,7 +2,7 @@ prontera,150,180,4	script	Enchant Master	63,{
 	mes "[Enchant Master]";
 	mes "Which equipment would you like to upgrade?";
 	next;
-	for(.@i = 1; .@i <= 10; .@i++)
+	for(.@i = 1; .@i <= getarraysize(.indices); .@i++)
 		.@menu$ = .@menu$ + ((getequipisequiped(.indices[.@i])) ? getequipname(.indices[.@i]) : "") + ":";
 	.@part = .indices[ select(.@menu$,"Cancel") ];
 	if(!.@part) {
@@ -34,7 +34,7 @@ prontera,150,180,4	script	Enchant Master	63,{
 	mes "Which slot would you like to enchant?";
 	next;
 	.@menu$ = "";
-	for(.@i = 0; .@i < 5; .@i++)
+	for(.@i = 0; .@i < MAX_SLOTS + 1; .@i++)
 		.@menu$ = .@menu$ + (.@i >= getiteminfo(.@itemid, ITEMINFO_SLOT) ? .slots$[.@i] + (.@card[.@i+1] ? " - " + getitemname(.@card[.@i+1]) : "" ) : "") + ":";
 	.@selected_slot = select(.@menu$);
 	if(.@selected_slot == 5) {
