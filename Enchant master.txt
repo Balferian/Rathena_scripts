@@ -50,7 +50,7 @@ prontera,150,180,4	script	Enchant Master	63,{
 		mes "Which enchant would you like to implant?";
 		mes "Success chance: "+.success[0]+"%";
 		if(.zeny[0]) mes "It will cost "+.zeny[0]+" zeny.";
-		if(.items$[0]) {
+		if(.items$[0] != "") {
 			mes "Needed items:";
 			explode(.@list$, .items$[0], ",");
 			for(.@i = 0; .@i < getarraysize(.@list$); .@i++) {
@@ -83,7 +83,7 @@ prontera,150,180,4	script	Enchant Master	63,{
 		}
 		if(.zeny[0])
 			zeny -= .zeny[0];
-		if(.items$[0]) {
+		if(.items$[0] != "") {
 			explode(.@list$, .items$[0], ",");
 			for(.@i = 0; .@i < getarraysize(.@list$); .@i++) {
 				explode(.@item$, .@list$[.@i], ":");
@@ -126,7 +126,7 @@ prontera,150,180,4	script	Enchant Master	63,{
 		mes "Upgrade to: ^0000FF"+getitemname(.@card[.@selected_slot])+"^000000";
 		mes "Success chance: "+.success[.@index]+"%";
 		if(.zeny[.@index]) mes "It will cost "+.zeny[.@index]+" zeny.";
-		if(.items$[.@index]) {
+		if(.items$[.@index] != "") {
 			mes "Needed items:";
 			explode(.@list$, .items$[.@index], ",");
 			for(.@i = 0; .@i < getarraysize(.@list$); .@i++) {
@@ -154,7 +154,7 @@ prontera,150,180,4	script	Enchant Master	63,{
 		}
 		if(.zeny[.@index])
 			zeny -= .zeny[.@index];
-		if(.items$[.@index]) {
+		if(.items$[.@index] != "") {
 			explode(.@list$, .items$[.@index], ",");
 			for(.@i = 0; .@i < getarraysize(.@list$); .@i++) {
 				explode(.@item$, .@list$[.@i], ":");
