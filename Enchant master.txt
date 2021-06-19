@@ -1,3 +1,15 @@
+//===== rAthena Script ======================================= 
+//= Enchant Master
+//===== By: ==================================================
+//= Balferian
+//===== Current Version: ===================================== 
+//= 3.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: =========================================
+//= 1.0 Initial Commit
+//============================================================ 
+
 prontera,150,180,4	script	Enchant Master	63,{ 
 	mes "[Enchant Master]";
 	mes "Which equipment would you like to upgrade?";
